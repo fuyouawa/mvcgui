@@ -1,6 +1,6 @@
 #include "mvcgui/core/object.h"
 #include <stdexcept>
-#include <assert.h>
+#include <cassert>
 
 namespace mvcgui {
 void Object::ConnectImpl(

@@ -70,7 +70,7 @@ private:
 
 template<typename ProtoFunc, typename Func>
 requires std::is_member_function_pointer_v<Func>
-constexpr inline SlotObjectBasePtr MakeCallableObject(Func&& func) {
+inline SlotObjectBasePtr MakeCallableObject(Func&& func) {
     using Signature = FunctionTraits<Func>;
     using Arguments = typename Signature::Arguments;
     static_assert(kIsMatchableFunctions<ProtoFunc, Func>, "The type of each parameter and the return type of Func must match ProtoFunc mutually!");

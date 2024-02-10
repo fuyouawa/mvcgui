@@ -1,7 +1,7 @@
 #pragma once
 
-namespace mvcgui {
-namespace internal {
+
+namespace mvcgui::internal {
 class ObjectPrivate
 {
 public:
@@ -13,5 +13,4 @@ public:
     struct Sender;
     struct TaggedSignalVector;
 };
-} // namespace internal
-} // namespace mvcgui
+} // namespace mvcgui::internal

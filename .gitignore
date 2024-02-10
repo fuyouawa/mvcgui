@@ -30,5 +30,5 @@
 *.exe
 *.out
 *.app
-/.vs/mvcgui
-/x64/Debug
+/build
+.vscode

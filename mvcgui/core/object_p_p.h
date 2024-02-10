@@ -1,5 +1,5 @@
 #pragma once
-#include <core/object_p.h>
+#include "core/object_p.h"
 #include <atomic>
 #include <assert.h>
 
@@ -61,5 +61,5 @@ struct ObjectPrivate::Connection : public ConnectionOrSignalVector
     Connection* prev_connection_list;
 
 };
-}
-}
+} // namespace internal
+} // namespace mvcgui

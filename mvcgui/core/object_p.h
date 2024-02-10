@@ -13,5 +13,5 @@ public:
     struct Sender;
     struct TaggedSignalVector;
 };
-}
-}
+} // namespace internal
+} // namespace mvcgui

@@ -26,10 +26,16 @@ class Object
 public:
     template<typename Func, typename... Args>
     requires std::is_member_function_pointer_v<Func>
-    static void Connect(const Object* sender, Signal<Args...>* signal, const Object* receiver, Func&& slot, ConnectionType type) {
+    static void Connect(
+            const Object* sender,
+            Signal<Args...>* signal,
+            const Object* receiver,
+            Func&& slot,
+            ConnectionType connection_type,
+            InvokeType invoke_type) {
         using ProtoFunc = void(Args...);
         auto slot_obj = internal::MakeCallableObject<ProtoFunc, Func>(std::forward<Func>(slot));
-        ConnectImpl(sender, signal, receiver, slot_obj, type);
+        ConnectImpl(sender, signal, receiver, slot_obj, connection_type, invoke_type);
     }
 
 private:
@@ -38,7 +44,8 @@ private:
         SignalBase* signal,
         const Object* receiver,
         SlotObjectBasePtr slot,
-        ConnectionType type);
+        ConnectionType connection_type,
+        InvokeType invoke_type);
 
     std::unique_ptr<ObjectData> data_;
 };

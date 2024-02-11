@@ -1,7 +1,15 @@
 
 namespace mvcgui {
 enum class ConnectionType {
+    kUnique,
+    kReplace,
+    kSingle
+};
 
+enum class InvokeType {
+    kAuto,
+    kDirect,
+    kQueued
 };
 
 template <typename T> inline T *GetPointer(T *ptr) noexcept {

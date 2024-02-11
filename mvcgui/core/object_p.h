@@ -7,6 +7,8 @@ class ThreadData;
 class ObjectPrivate : public ObjectData
 {
 public:
+    MVCGUI_DECLARE_PUBLIC(Object)
+
     struct Connection;
     struct ConnectionData;
     struct ConnectionList;
@@ -20,6 +22,10 @@ public:
                             const Object* receiver,
                             SlotObjectBasePtr slot,
                             const MateObject* sender_mate_obj,
-                            ConnectionType type);
+                            ConnectionType connection_type,
+                            InvokeType invoke_type);
+
+    Object* owner_;
+    std::atomic<ConnectionData*> connections_;
 };
 } // namespace mvcgui

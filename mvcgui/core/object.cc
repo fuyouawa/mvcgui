@@ -8,12 +8,13 @@ void Object::ConnectImpl(
     SignalBase* signal,
     const Object* receiver,
     SlotObjectBasePtr slot,
-    ConnectionType type)
+    ConnectionType connection_type,
+    InvokeType invoke_type)
 {
     assert(sender);
     assert(signal);
     assert(receiver);
     assert(slot);
-    ObjectPrivate::ConnectImpl(sender, signal, receiver, slot, sender->data()->meta_obj_, type);
+    ObjectPrivate::ConnectImpl(sender, signal, receiver, slot, sender->data()->meta_obj_, connection_type, invoke_type);
 }
 } // namespace mvcgui

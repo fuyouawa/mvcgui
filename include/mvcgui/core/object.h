@@ -1,30 +1,35 @@
 #pragma once
 #include <mvcgui/core/global.h>
 #include <mvcgui/core/object_impl.h>
+#include <mvcgui/tools/property.h>
 #include <memory>
 
 namespace mvcgui {
 class SignalBase;
+class ObjectPrivate;
+struct MateObject;
+
 template<typename... Args>
 class Signal;
-namespace internal {
 class SlotObjectBase;
+
 using SlotObjectBasePtr = std::shared_ptr<SlotObjectBase>;
-} // namespace internal
+
+class ObjectData : NonMoveable {
+public:
+    MateObject* meta_obj_;
+};
 
 class Object
 {
+    MVCGUI_DECLARE_PRIVATE(Object)
 public:
     template<typename Func, typename... Args>
     requires std::is_member_function_pointer_v<Func>
     static void Connect(const Object* sender, Signal<Args...>* signal, const Object* receiver, Func&& slot, ConnectionType type) {
         using ProtoFunc = void(Args...);
-        ConnectImpl(
-            sender,
-            signal,
-            receiver,
-            internal::MakeCallableObject<ProtoFunc, Func>(std::forward<Func>(slot)),
-            type);
+        auto slot_obj = internal::MakeCallableObject<ProtoFunc, Func>(std::forward<Func>(slot));
+        ConnectImpl(sender, signal, receiver, slot_obj, type);
     }
 
 private:
@@ -32,7 +37,9 @@ private:
         const Object* sender,
         SignalBase* signal,
         const Object* receiver,
-        internal::SlotObjectBasePtr slot,
+        SlotObjectBasePtr slot,
         ConnectionType type);
+
+    std::unique_ptr<ObjectData> data_;
 };
 } // namespace mvcgui

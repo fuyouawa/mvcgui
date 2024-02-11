@@ -12,9 +12,11 @@ include_directories(${THIRD_PARTY_DIR}/imgui)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/mvcgui)
 
-add_library(mvcgui STATIC)
-
-target_sources(mvcgui PRIVATE 
-    mvcgui/core/object_p.h
-    mvcgui/core/object_p_p.h
-    mvcgui/core/object.cpp)
+add_library(mvcgui STATIC
+        mvcgui/core/object_p.h
+        mvcgui/core/object_p_impl.h
+        mvcgui/core/object.cc
+        mvcgui/core/object_p_impl.cc
+        mvcgui/core/object_p.cc
+        mvcgui/core/objectdefs.cc
+        mvcgui/core/objectdefs.h)

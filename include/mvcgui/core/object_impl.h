@@ -69,13 +69,13 @@ private:
 };
 
 template<typename ProtoFunc, typename Func>
-requires std::is_member_function_pointer_v<Func>
+requires std::is_member_function_pointer_v<std::decay_t<Func>>
 inline SlotObjectBasePtr MakeCallableObject(Func&& func) {
     using Signature = FunctionTraits<Func>;
     using Arguments = typename Signature::Arguments;
     static_assert(kIsMatchableFunctions<ProtoFunc, Func>, "The type of each parameter and the return type of Func must match ProtoFunc mutually!");
     return std::shared_ptr{new CallableObject<Func, Arguments>(std::forward<Func>(func)),
-                           SlotObjectBase::Deleter};
+                           SlotObjectBase::Deleter{}};
 }
 } // namespace internal
 } // namespace mvcgui

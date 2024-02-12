@@ -19,4 +19,4 @@ add_library(mvcgui STATIC
         mvcgui/core/object_p_impl.cc
         mvcgui/core/object_p.cc
         mvcgui/core/objectdefs.cc
-        mvcgui/core/objectdefs.h)
+        include/mvcgui/core/objectdefs.h)

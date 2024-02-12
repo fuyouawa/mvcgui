@@ -4,4 +4,4 @@ namespace mvcgui {
 class ThreadData {
 
 };
-} // namespace mvcgui
+}   // namespace mvcgui

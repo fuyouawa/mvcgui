@@ -3,18 +3,20 @@
 #include <cassert>
 
 namespace mvcgui {
-void Object::ConnectImpl(
+    MetaObject::Connection Object::ConnectImpl(
     const Object* sender,
     SignalBase* signal,
     const Object* receiver,
-    SlotObjectBasePtr slot,
+    void** slot_ptr,
+    internal::SlotObjectBasePtr slot_obj,
     ConnectionType connection_type,
     InvokeType invoke_type)
 {
     assert(sender);
     assert(signal);
     assert(receiver);
-    assert(slot);
-    ObjectPrivate::ConnectImpl(sender, signal, receiver, slot, sender->data()->meta_obj_, connection_type, invoke_type);
+    assert(slot_ptr);
+    assert(slot_obj);
+    return ObjectPrivate::ConnectImpl(sender, signal, receiver, slot_ptr, slot_obj, connection_type, invoke_type);
 }
-} // namespace mvcgui
+}   // namespace mvcgui

@@ -1,7 +1,7 @@
-#include "core/objectdefs.h"
+#include "mvcgui/core/objectdefs.h"
 
 namespace mvcgui {
-int MateObject::index_of_signal(const SignalBase *signal) const {
+int MetaObject::index_of_signal(const SignalBase *signal) const {
     return 0;
 }
-}//namespace mvcgui
+}   // namespace mvcgui

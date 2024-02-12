@@ -10,22 +10,27 @@ public:
     MVCGUI_DECLARE_PUBLIC(Object)
 
     struct Connection;
-    struct ConnectionData;
+    struct ConnectionManager;
     struct ConnectionList;
     struct ConnectionOrSignalVector;
     struct SignalVector;
     struct Sender;
     struct TaggedSignalVector;
 
-    static void ConnectImpl(const Object* sender,
+    using ConnectionPtr = std::unique_ptr<Connection>;
+
+    static MetaObject::Connection ConnectImpl(const Object* sender,
                             SignalBase* signal,
                             const Object* receiver,
-                            SlotObjectBasePtr slot,
-                            const MateObject* sender_mate_obj,
+                            void** slot_ptr,
+                            internal::SlotObjectBasePtr slot_obj,
                             ConnectionType connection_type,
                             InvokeType invoke_type);
 
+    void AddConnection(int signal_index, ConnectionPtr conn);
+
     Object* owner_;
-    std::atomic<ConnectionData*> connections_;
+    std::atomic<ConnectionManager*> connection_manager_;
+    std::atomic<ThreadData*> thread_data_;
 };
-} // namespace mvcgui
+}   // namespace mvcgui

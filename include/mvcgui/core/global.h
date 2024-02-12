@@ -1,9 +1,8 @@
 
 namespace mvcgui {
 enum class ConnectionType {
-    kUnique,
-    kReplace,
-    kSingle
+    kUnique,        // 同一个Slot只能被连接一次
+    kReplace,       // 一个Object中只能有一个Slot连接到对应的Signal中, 如果Signal中已有一个当前Object的Slot, 则替换
 };
 
 enum class InvokeType {
@@ -19,7 +18,7 @@ template <typename Ptr> inline auto GetPointer(Ptr &ptr) noexcept -> decltype(pt
     static_assert(noexcept(ptr.get()), "Smart data pointers for MVCGUI_DECLARE_PRIVATE must have noexcept get()");
     return ptr.get();
 }
-} // namespace mvcgui
+}   // namespace mvcgui
 
 #define MVCGUI_DECLARE_PRIVATE(cls) MVCGUI_DECLARE_PRIVATE_D(data_, cls)
 #define MVCGUI_DECLARE_PRIVATE_D(d, cls) \

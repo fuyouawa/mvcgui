@@ -1,7 +1,7 @@
 #include "core/object_p_impl.h"
 
 namespace mvcgui {
-ObjectPrivate::ConnectionData::~ConnectionData()  {
+ObjectPrivate::ConnectionManager::~ConnectionManager()  {
     if (auto o = orphaned.exchange(
             TaggedSignalVector(nullptr),
             std::memory_order_relaxed); o.addr)
@@ -14,15 +14,15 @@ ObjectPrivate::ConnectionData::~ConnectionData()  {
     }
 }
 
-void ObjectPrivate::ConnectionData::RemoveConnection(ObjectPrivate::Connection *conn) {
+void ObjectPrivate::ConnectionManager::RemoveConnection(ObjectPrivate::Connection *conn) {
     //TODO RemoveConnection
 }
 
-void ObjectPrivate::ConnectionData::ResizeSignalVector(size_t size) {
+void ObjectPrivate::ConnectionManager::ResizeSignalVector(size_t size) {
     //TODO ResizeSignalVector
 }
 
-void ObjectPrivate::ConnectionData::DeleteOrphaned(ObjectPrivate::TaggedSignalVector o) {
+void ObjectPrivate::ConnectionManager::DeleteOrphaned(ObjectPrivate::TaggedSignalVector o) {
     //TODO DeleteOrphaned
 }
-}//namespace mvcgui
+}   // namespace mvcgui

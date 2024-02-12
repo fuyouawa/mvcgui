@@ -2,4 +2,4 @@
 
 namespace mvcgui {
 class Signal;
-} // namespace mvcgui
+}   // namespace mvcgui

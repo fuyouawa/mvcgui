@@ -30,4 +30,4 @@ public:
 protected:
     Singleton() = default;
 };
-} // namespace mvcgui
+}   // namespace mvcgui

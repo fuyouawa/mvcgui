@@ -40,56 +40,46 @@ struct ObjectPrivate::TaggedSignalVector
 };
 
 
-struct ObjectPrivate::ConnectionOrSignalVector
-{
-    union {
-        TaggedSignalVector next_in_orphan_list;
-        Connection* next;
-    };
-};
-static_assert(std::is_trivial_v<ObjectPrivate::ConnectionOrSignalVector>);
-
-
-struct ObjectPrivate::Connection : public ConnectionOrSignalVector
+struct ObjectPrivate::Connection
 {
     Connection** prev;
-    std::atomic<Connection*> next_connection_list;
-    Connection* prev_connection_list;
+    std::atomic<Connection*> next_connection;
+    Connection* prev_connection;
 
     Object* sender;
     std::atomic<Object*> receiver;
     std::atomic<ThreadData*> receiver_thread_data;
-    SlotObjectBasePtr slot_obj;
+    internal::SlotObjectBasePtr slot_obj;
     uint32_t id;
-    int signal_index;
+    size_t signal_index;
     ConnectionType conn_type;
 };
 
 
-struct ObjectPrivate::SignalVector : public ConnectionOrSignalVector
+struct ObjectPrivate::SignalVector
 {
     size_t allocated;
-    auto& at(int i) {
+    auto& at(size_t i) {
         //TODO 暂时不知道为什么要i+1
         return reinterpret_cast<ConnectionList *>(this + 1)[i + 1];
     }
-    auto& at(int i) const {
+    auto& at(size_t i) const {
         return reinterpret_cast<const ConnectionList *>(this + 1)[i + 1];
     }
     auto count() const { return allocated; }
 };
 
 
-struct ObjectPrivate::ConnectionData {
+struct ObjectPrivate::ConnectionManager {
     std::atomic_uint current_connection_id;
     std::atomic<SignalVector*> signal_vector;
     Connection* senders;
     Sender* current_sender;
     std::atomic<TaggedSignalVector> orphaned;
 
-    ~ConnectionData();
+    ~ConnectionManager();
     void RemoveConnection(Connection* conn);
     void ResizeSignalVector(size_t size);
     static void DeleteOrphaned(TaggedSignalVector o);
 };
-} // namespace mvcgui
+}   // namespace mvcgui
